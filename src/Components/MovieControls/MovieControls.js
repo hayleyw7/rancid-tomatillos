@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomSelect from './CustomSelect';
 import './MovieControls.css';
 
 const SORT_OPTIONS = [
@@ -16,50 +17,45 @@ const RATING_OPTIONS = [
 ];
 
 const MovieControls = ({ sortBy, genreId, ratingFilter, genres, onSortChange, onGenreChange, onRatingChange }) => {
+  const genreOptions = [
+    { value: '', label: 'All Genres' },
+    ...genres.map(genre => ({ value: String(genre.id), label: genre.name }))
+  ];
+
   return (
     <section className='movie-controls sub-bar' aria-label='Movie filters and sorting'>
       <div className='movie-controls__filters'>
         <div className='movie-controls__group'>
-          <label className='movie-controls__label' htmlFor='sort-by'>Sort by</label>
-          <select
+          <span className='movie-controls__label' id='sort-by-label'>Sort by</span>
+          <CustomSelect
             id='sort-by'
-            className='movie-controls__select'
+            labelId='sort-by-label'
             value={sortBy}
-            onChange={(event) => onSortChange(event.target.value)}
-          >
-            {SORT_OPTIONS.map(option => (
-              <option key={option.value} value={option.value}>{option.label}</option>
-            ))}
-          </select>
+            options={SORT_OPTIONS}
+            onChange={onSortChange}
+          />
         </div>
 
         <div className='movie-controls__group'>
-          <label className='movie-controls__label' htmlFor='genre-filter'>Genre</label>
-          <select
+          <span className='movie-controls__label' id='genre-filter-label'>Genre</span>
+          <CustomSelect
             id='genre-filter'
-            className='movie-controls__select'
+            labelId='genre-filter-label'
             value={genreId}
-            onChange={(event) => onGenreChange(event.target.value)}
-          >
-            <option value=''>All Genres</option>
-            {genres.map(genre => (
-              <option key={genre.id} value={genre.id}>{genre.name}</option>
-            ))}
-          </select>
+            options={genreOptions}
+            onChange={onGenreChange}
+          />
         </div>
 
         <div className='movie-controls__group'>
-          <label className='movie-controls__label' htmlFor='rating-filter'>Rating</label>
-          <select
+          <span className='movie-controls__label' id='rating-filter-label'>Rating</span>
+          <CustomSelect
             id='rating-filter'
-            className='movie-controls__select'
+            labelId='rating-filter-label'
             value={ratingFilter}
-            onChange={(event) => onRatingChange(event.target.value)}
-          >
-            {RATING_OPTIONS.map(option => (
-              <option key={option.value} value={option.value}>{option.label}</option>
-            ))}
-          </select>
+            options={RATING_OPTIONS}
+            onChange={onRatingChange}
+          />
         </div>
       </div>
     </section>
