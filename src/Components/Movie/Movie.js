@@ -4,7 +4,7 @@ import Error from '../Error/Error';
 import Loader from '../Loader/Loader';
 import { getMovieById } from '../../utilities/apiCalls';
 import { cleanMovieData } from '../../utilities/dataCleaning';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class Movie extends Component {
   constructor(props) {
@@ -16,10 +16,43 @@ class Movie extends Component {
   }
 
   componentDidMount() {
+    this.loadMovie();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.movieID !== this.props.movieID) {
+      this.loadMovie();
+    }
+  }
+
+  loadMovie = () => {
+    this.setState({ singleMovie: {}, error: '' });
+
     getMovieById(this.props.movieID)
-    .then(data => cleanMovieData(data))
-    .then(data => this.setState({singleMovie: data}))
-    .catch(error => this.setState({error: error.message}))
+      .then(data => cleanMovieData(data))
+      .then(data => this.setState({ singleMovie: data }))
+      .catch(error => this.setState({ error: error.message }));
+  }
+
+  handleBack = () => {
+    this.props.history.push('/');
+  }
+
+  renderNav = () => {
+    const { nextMovie } = this.props;
+
+    return (
+      <nav className='movie-nav sub-bar'>
+        <button className='movie-nav__back' type='button' onClick={this.handleBack}>
+          ← Back to posters
+        </button>
+        {nextMovie && (
+          <Link to={`/${nextMovie.id}`} className='movie-nav__next'>
+            Next movie →
+          </Link>
+        )}
+      </nav>
+    );
   }
 
   displayMovieCard = () => {
@@ -39,25 +72,33 @@ class Movie extends Component {
               {genres.map(genre => <p className='genres' key={genre}>{genre}</p>)}
             </div>
           </section>
-          <Link to='/'>
-            <button className='back-btn'>BACK</button>
-          </Link> 
         </section>
       </section>
     )
   }
 
-  conditionalPostersDisplay = () => {
-    const {singleMovie, error} = this.state;
+  renderContent = () => {
+    const { singleMovie, error } = this.state;
 
-    return error ? <Error message={error} page='movie information' /> 
-      : !Object.keys(singleMovie).length ? <Loader item='movie information is' /> 
-      : this.displayMovieCard()
+    if (error) {
+      return <Error message={error} page='movie information' />;
+    }
+
+    if (!Object.keys(singleMovie).length) {
+      return <Loader item='movie information is' />;
+    }
+
+    return this.displayMovieCard();
   }
 
   render = () => {
-    return this.conditionalPostersDisplay()
+    return (
+      <>
+        {this.renderNav()}
+        {this.renderContent()}
+      </>
+    );
   }
 }
 
-export default Movie;
+export default withRouter(Movie);

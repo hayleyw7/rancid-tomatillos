@@ -1,24 +1,81 @@
+.movie-nav {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.movie-nav__back,
+.movie-nav__next {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.4rem;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 0.85rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.movie-nav__back:hover,
+.movie-nav__next:hover {
+  background-color: #880808;
+  border-color: #880808;
+}
+
+.movie-nav__back:focus-visible,
+.movie-nav__next:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
 .movie-background {
+  background-position: center;
   background-size: cover;
-  display: flex; 
+  box-sizing: border-box;
+  display: flex;
   flex-direction: row;
   justify-content: center;
-  min-height: 82.8vh;
+  max-width: 100%;
+  min-height: calc(100vh - 12rem);
+  overflow-x: hidden;
   padding: 0;
 }
 
+.movie-container {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  padding: 0 1rem;
+  width: 100%;
+}
+
 .movie-card {
-  background:rgb(40, 44, 52, 0.8);
+  background: rgb(40, 44, 52, 0.88);
   border-radius: .5rem;
+  box-sizing: border-box;
   color: white;
   font-weight: 500;
-  margin: 1.8rem 1.9rem 0 2rem;
+  margin: 1.5rem auto;
   max-width: 40rem;
+  overflow-wrap: break-word;
   padding: 1.5rem 2rem 1.6rem 2rem;
+  width: 100%;
 }
 
 .title {
-  font-size: 3.2rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
   margin: 0;
 }
 
@@ -35,6 +92,7 @@
 
 .overview {
   font-size: 1.2rem;
+  line-height: 1.5;
 }
 
 .genre-container {
@@ -54,26 +112,46 @@
 }
 
 .release {
-  font-size: 1.3rem; 
-  font-weight: bold; 
+  font-size: 1.3rem;
+  font-weight: bold;
   margin: 0;
 }
 
 .runtime {
-  margin: .4rem 0 1rem 0;
   font-weight: bold;
+  margin: .4rem 0 1rem 0;
 }
 
-.back-btn {
-  background: white;
-  border: 0;
-  border-radius: 10rem;
-  color: rgb(40, 44, 52, 0.8);
-  font-size: 1.8rem;
-  margin: 1.7rem 0 1.7rem 0;
-  padding: 0.5rem 0.9rem 0.4rem 0.9rem;
-}
+@media (max-width: 600px) {
+  .movie-nav {
+    gap: 0.5rem;
+    max-width: 100%;
+  }
 
-.back-btn:hover {
-  transform: scale(1.07) perspective(1px);  
+  .movie-nav__back,
+  .movie-nav__next {
+    flex: 1;
+    font-size: 0.78rem;
+    min-width: 0;
+    padding: 0.4rem 0.5rem;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .movie-container {
+    padding: 0 0.75rem;
+  }
+
+  .movie-card {
+    margin: 1rem auto;
+    padding: 1.25rem 1rem 1.4rem;
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  .overview {
+    font-size: 1.05rem;
+  }
 }

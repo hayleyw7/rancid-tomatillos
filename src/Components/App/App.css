@@ -1,19 +1,22 @@
 .App {
+  background-color: #f3f3f3;
+  max-width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
   text-align: center;
+}
+
+.site-top {
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
 }
 
 .App-header {
   align-items: center;
   background-color: #880808;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
   color: white;
   display: flex;
   justify-content: center;
-  padding: 2rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  padding: 1.45rem 2rem;
 }
 
 .App-brand {
@@ -21,8 +24,10 @@
   color: inherit;
   display: flex;
   gap: 1.5rem;
+  max-width: 72rem;
   text-decoration: none;
   transition: opacity 0.2s ease;
+  width: 100%;
 }
 
 .App-brand:hover {
@@ -66,14 +71,15 @@
   letter-spacing: -0.01em;
   line-height: 1.05;
   margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .App-tagline {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.95rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  margin: 0.3rem 0 0;
+  letter-spacing: 0.06em;
+  margin: 0.35rem 0 0;
   text-transform: uppercase;
 }
 
@@ -81,21 +87,47 @@
   color: #61dafb;
 }
 
-@media (max-width: 480px) {
+.sub-bar {
+  background-color: rgb(40, 44, 52);
+  border-bottom: 3px solid #880808;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+  height: 5.125rem;
+  padding: 0.75rem 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .sub-bar {
+    height: 10.75rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .movie-nav.sub-bar {
+    height: auto;
+    min-height: 0;
+    padding: 0.5rem 0.75rem;
+  }
+
   .App-header {
-    padding: 1.5rem 1rem;
+    justify-content: flex-start;
+    padding: 1.15rem 1rem;
   }
 
   .App-brand {
     gap: 1rem;
+    justify-content: flex-start;
+  }
+
+  .App-brand-text {
+    text-align: left;
   }
 
   .App-logo {
-    height: 3.75rem;
-    width: 3.75rem;
+    height: 3.5rem;
+    width: 3.5rem;
   }
 
   .App-tagline {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
 }

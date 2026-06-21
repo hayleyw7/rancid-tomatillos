@@ -41,7 +41,7 @@ describe('Single Movie Details Page', () => {
   });
 
   it('Should display back button', () => {
-    cy.get('button[class="back-btn"]')
+    cy.get('button[class="movie-nav__back"]')
       .should('be.visible')
   });
 
@@ -63,7 +63,7 @@ describe('Single Movie Details Page', () => {
   it('Should be able to click heading with no change in page', () => {
     cy.get('h1')
       .click()
-    cy.get('button[class="back-btn"]')
+    cy.get('button[class="movie-nav__back"]')
       .should('be.visible')
     cy.get('img[class="poster-icon"]')
       .should('not.exist')
@@ -72,7 +72,7 @@ describe('Single Movie Details Page', () => {
   it('Should be able to click background with no change in page', () => {
     cy.get('section[class="movie-background"]')
       .click()
-    cy.get('button[class="back-btn"]')
+    cy.get('button[class="movie-nav__back"]')
       .should('be.visible')
     cy.get('img[class="poster-icon"]')
       .should('not.exist')
@@ -81,14 +81,14 @@ describe('Single Movie Details Page', () => {
   it('Should be able to click movie genres with no change in page', () => {
     cy.get('p[class="genres"]')
       .click({ multiple: true })
-    cy.get('button[class="back-btn"]')
+    cy.get('button[class="movie-nav__back"]')
       .should('be.visible')
     cy.get('img[class="poster-icon"]')
       .should('not.exist')
   });
 
   it('Should direct user back to poster page', () => {
-    cy.get('button[class="back-btn"]')
+    cy.get('button[class="movie-nav__back"]')
       .click()
     cy.get('img[class="poster-icon"]')
       .its('length')
