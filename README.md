@@ -1,117 +1,114 @@
 # Rancid Tomatillos
 
-<img width="1417" alt="Screen Shot 2021-09-06 at 5 24 11 PM" src="https://user-images.githubusercontent.com/22990386/132265533-a180eb44-a65d-4a13-984e-8b74b0e3121c.png">
+A Rotten Tomatoes-style movie browser built with React. Browse posters, filter and sort by genre and rating, load more as you scroll, and open any film for details — powered by [The Movie Database (TMDB)](https://www.themoviedb.org/).
 
-This is an application to display movie posters and then access movie details through an API. The user can access a list of movie posters, select any one of them, & be provided information about that specific film, including its rating, description, release year, tagline, running time, and genre(s).
+**Live site:** [https://hayleyw7.github.io/rancid-tomatillos](https://hayleyw7.github.io/rancid-tomatillos)
 
-The application is deployed and can be [accessed online here](https://hayleyw7.github.io/rancid-tomatillos/).
+**Repo:** [https://github.com/hayleyw7/rancid-tomatillos](https://github.com/hayleyw7/rancid-tomatillos)
 
-## Motivation and rubric
+---
 
-This project was a paired project for Turing School of Software & Design during module 3.
+## Features
 
-[The project rubric is linked here.](https://frontend.turing.edu/projects/module-3/rancid-tomatillos-v3.html)
+- Movie poster grid with infinite scroll
+- Sort by popularity, rating, or release date
+- Filter by genre and rating (Fresh / Mixed / Rotten)
+- Movie detail pages with backdrop, overview, runtime, and genres
+- **Back to posters** always returns to the homepage with your filters and scroll position restored
+- **Next movie** steps through the list you were browsing
 
-## Goals and objectives
+No backend required — the app is static and talks to TMDB directly from the browser.
 
-The joint goals of both partners were to gain competency with React fundamentals, learn how to test React components & asynchronous JS, practice refactoring, & create a multi-page UX using Router.
+---
 
-Hayley also wanted to focus on mastering flex-box, practice React skills used in upcoming assessments, terinaries, and successful site deployment.
+## Tech stack
 
-In addition to the joint goals, William wanted to focus on data-cleaning, Cypress, and conditional rendering for error-handling.
+- React 17, React Router, JavaScript / JSX
+- TMDB API for movie data and images
+- Cypress for E2E tests
+- Deployed on **GitHub Pages** via GitHub Actions
 
-## Reflections and evolution
+Originally built as a paired [Turing School](https://turing.edu) module 3 project. [Project rubric](https://frontend.turing.edu/projects/module-3/rancid-tomatillos-v3.html).
 
-### Start of project
+---
 
-A challenge we encountered was conditional rendering and ternary syntax.
+## Local development
 
-Big successes were setting up React components, application foundations, & implementing JSX.
+### 1. Install dependencies
 
-### Middle of project
+```bash
+npm install
+```
 
-A challenge was setting up Router, especially with match and the need to convert our Movie functional component into a class component.
+### 2. Add a TMDB API key
 
-A success was setting up stubbing of api calls in Cypress.
+TMDB keys are **free**. Sign up and request a key at [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api).
 
-### End of project
+```bash
+cp .env.example .env
+```
 
-A challenge towards the end of the project was testing for 500 and 404 errors and URL pathnames.
+Add your key to `.env`:
 
-Big successes were getting the site deployed and (despite already feeling satisfied) finding numerous opportunities to DRY up our code.
+```
+REACT_APP_TMDB_API_KEY=your_tmdb_api_key_here
+```
 
-## Languages and technology
+Restart the dev server whenever you change `.env`.
 
-Written in JavaScript, HTML, CSS, & JSX
+### 3. Run the app
 
-Utilizes NPM, Node, Cypress, Router, & React
+```bash
+npm start
+```
 
-Deployed on GitHub Pages
+Open [http://localhost:3000](http://localhost:3000).
 
-Built with Visual Studio Code
+### Run Cypress tests
 
-[Code stored on GitHub](https://github.com/williamphelps13/rancid-tomatillos)
+```bash
+npm start   # in one terminal
+npx cypress open
+```
 
-[Project board on GitHub](https://github.com/williamphelps13/rancid-tomatillos/projects/1) 
-
-## Access and use website
-
-When the user visits the application [here](https://hayleyw7.github.io/rancid-tomatillos/), they will be able to see a page tiled with movie posters. If they click a poster, they can see details for that movie. They can return to the original posters page by clicking "BACK" on the details page or the back button on their internet browser.
-
-After returning to the poster page, they can use the forward button on their browser to return to the previous movie information page, or they can click a new movie poster to see that movie information page instead.
-
-Each page has a unique URL that can be bookmarked and/or manually typed in the address bar.
-
-## TMDB API setup
-This app uses [The Movie Database (TMDB)](https://www.themoviedb.org/) for movie posters, ratings, and details. **TMDB API keys are free** — create an account and request a key at [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api). Personal projects stay within generous rate limits with no credit card required.
-
-No separate backend is needed. The app runs entirely as static files on GitHub Pages and calls TMDB directly from the browser.
-
-### Local development
-1. Copy `.env.example` to `.env`:
-   - `cp .env.example .env`
-2. Add your key to `.env`:
-   - `REACT_APP_TMDB_API_KEY=your_tmdb_api_key_here`
-3. Restart the dev server after creating or updating `.env`:
-   - `npm start`
+---
 
 ## Deploy to GitHub Pages
-The site is configured for [https://hayleyw7.github.io/rancid-tomatillos](https://hayleyw7.github.io/rancid-tomatillos).
 
-1. In your GitHub repo, go to **Settings → Secrets and variables → Actions** and add:
+The repo is already set up for GitHub Pages at `https://hayleyw7.github.io/rancid-tomatillos` (see `homepage` in `package.json` and `.github/workflows/deploy.yml`).
+
+### One-time GitHub setup
+
+1. **Add your TMDB key as a secret**
+   - Repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**
    - Name: `REACT_APP_TMDB_API_KEY`
    - Value: your TMDB API key
-2. In **Settings → Pages**, set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.
-3. Push to `main`. The workflow in `.github/workflows/deploy.yml` builds and publishes automatically.
 
-To deploy manually from your machine:
+2. **Enable GitHub Pages**
+   - Repo → **Settings** → **Pages**
+   - **Source:** Deploy from a branch
+   - **Branch:** `gh-pages` / `/ (root)`
+
+3. **Push to `main`**
+   - The deploy workflow builds with your secret and publishes to the `gh-pages` branch automatically.
+
+After the Action finishes, the live site should load movies using the key from GitHub Secrets. You do **not** commit `.env` to the repo.
+
+### Manual deploy (optional)
+
 ```bash
 REACT_APP_TMDB_API_KEY=your_key npm run build
 npx gh-pages -d build
 ```
 
-The API key is embedded in the built JavaScript (standard for client-side TMDB apps). Do not commit `.env`; use GitHub Secrets for CI deploys.
+---
 
-## Screenshots
+## Project history
 
-### Movie Posters Page
-<img width="1417" alt="Screen Shot 2021-09-06 at 5 24 25 PM" src="https://user-images.githubusercontent.com/22990386/132265588-029bab0d-d06f-435b-b504-e67d3ab89abe.png">
-
-### Movie Details Page
-<img width="1417" alt="Screen Shot 2021-09-06 at 5 24 44 PM" src="https://user-images.githubusercontent.com/22990386/132265599-73f5f0ee-0558-4522-922c-e428af0cddf6.png">
-
-### 404 Error Page
-<img width="1431" alt="Screen Shot 2021-09-06 at 5 25 02 PM" src="https://user-images.githubusercontent.com/22990386/132265602-2b72c931-27b3-40a8-bb42-e2c7006b3c43.png">
-505 Page has same format with different text.
-
-## Future additions
-
-* The user will be able to add movies to a list of favorites.
-* The user will be able to search movies by name.
-* The user will be able to search movies by genre.
+This app started as a Turing paired project focused on React fundamentals, Router, async data, Cypress, and deployment. It was later updated to use TMDB instead of a custom backend, with filtering, infinite scroll, and GitHub Pages hosting.
 
 ## Contributors
 
-Project completed by [William Phelps](https://github.com/williamphelps13) & [Hayley Witherell](https://github.com/hayleyw7)
+[William Phelps](https://github.com/williamphelps13) & [Hayley Witherell](https://github.com/hayleyw7)
 
-Project designed by instructors at Turing School of Art & Design
+Project designed by instructors at Turing School of Software & Design

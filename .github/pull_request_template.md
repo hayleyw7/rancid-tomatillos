@@ -1,15 +1,4 @@
-# Thank you for pushing your code!
-
 ## What was implemented?
--
-
-## Were there any issues that arose?
--
-
-## Is there anything that you need from your teammate?
--
-
-## Any other comments, questions, or concerns?
 -
 
 ## Type of change
