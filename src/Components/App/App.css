@@ -1,17 +1,16 @@
 .App {
-  background-color: #141820;
   min-height: 100vh;
   text-align: center;
 }
 
 .App-header {
   align-items: center;
-  background: linear-gradient(135deg, #0f1419 0%, #1a2332 45%, #162018 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  background-color: #880808;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  color: white;
   display: flex;
   justify-content: center;
-  padding: 1.25rem 1.5rem;
+  padding: 2rem 2rem;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -21,7 +20,7 @@
   align-items: center;
   color: inherit;
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   text-decoration: none;
   transition: opacity 0.2s ease;
 }
@@ -31,30 +30,29 @@
 }
 
 .App-brand:focus-visible {
-  outline: 2px solid #7cb342;
+  outline: 2px solid white;
   outline-offset: 4px;
   border-radius: 0.5rem;
 }
 
 .App-logo {
-  background: #1e2a1e;
-  border: 2px solid rgba(255, 255, 255, 0.12);
+  border: 3px solid white;
   border-radius: 50%;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   display: grid;
   flex-shrink: 0;
   grid-template-columns: 1fr 1fr;
-  height: 3.25rem;
+  height: 4.75rem;
   overflow: hidden;
-  width: 3.25rem;
+  width: 4.75rem;
 }
 
 .App-logo__fresh {
-  background: linear-gradient(160deg, #8bc34a 0%, #558b2f 100%);
+  background-color: white;
 }
 
 .App-logo__rotten {
-  background: linear-gradient(160deg, #e53935 0%, #880808 100%);
+  background-color: rgb(40, 44, 52);
 }
 
 .App-brand-text {
@@ -62,28 +60,20 @@
 }
 
 .App-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  color: white;
+  font-size: clamp(2.75rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
   margin: 0;
 }
 
-.App-title-rancid {
-  color: #ef5350;
-  margin-right: 0.35em;
-}
-
-.App-title-tomatillos {
-  color: #aed581;
-}
-
 .App-tagline {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  margin: 0.35rem 0 0;
+  letter-spacing: 0.04em;
+  margin: 0.3rem 0 0;
   text-transform: uppercase;
 }
 
@@ -93,15 +83,19 @@
 
 @media (max-width: 480px) {
   .App-header {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .App-brand {
+    gap: 1rem;
   }
 
   .App-logo {
-    height: 2.75rem;
-    width: 2.75rem;
+    height: 3.75rem;
+    width: 3.75rem;
   }
 
   .App-tagline {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
   }
 }

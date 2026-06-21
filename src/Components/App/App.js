@@ -91,10 +91,7 @@ class App extends Component {
               <span className="App-logo__rotten" />
             </span>
             <div className="App-brand-text">
-              <h1 className="App-title">
-                <span className="App-title-rancid">Rancid</span>
-                <span className="App-title-tomatillos">Tomatillos</span>
-              </h1>
+              <h1 className="App-title">Rancid Tomatillos</h1>
               <p className="App-tagline">Fresh picks &amp; rotten flops</p>
             </div>
           </Link>
