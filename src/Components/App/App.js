@@ -4,7 +4,9 @@ import Error from '../Error/Error';
 import Loader from '../Loader/Loader';
 import Posters from '../Posters/Posters';
 import Movie from '../Movie/Movie';
-import { getMovies } from '../../utilities/apiCalls';
+import MovieControls from '../MovieControls/MovieControls';
+import '../MovieControls/MovieControls.css';
+import { getGenres, getMovies } from '../../utilities/apiCalls';
 import { cleanPosterData } from '../../utilities/dataCleaning';
 import { Route, Link } from 'react-router-dom';
 
@@ -13,29 +15,41 @@ class App extends Component {
     super();
     this.state = {
       movies: [],
+      genres: [],
       error: '',
       page: 0,
       totalPages: 1,
-      isLoadingMore: false
+      isLoadingMore: false,
+      isInitialLoading: true,
+      sortBy: 'popularity.desc',
+      genreId: '',
+      ratingFilter: 'all'
     }
   }
   
   componentDidMount = () => {
+    getGenres()
+      .then(genres => this.setState({ genres }))
+      .catch(() => this.setState({ genres: [] }));
+
     this.loadMovies(1);
   }
 
   loadMovies = (page) => {
     const isInitialLoad = page === 1;
+    const { sortBy, genreId, ratingFilter, isLoadingMore, page: currentPage, totalPages } = this.state;
 
     if (!isInitialLoad) {
-      if (this.state.isLoadingMore || this.state.page >= this.state.totalPages) {
+      if (isLoadingMore || currentPage >= totalPages) {
         return;
       }
 
       this.setState({ isLoadingMore: true });
+    } else {
+      this.setState({ isInitialLoading: true, error: '' });
     }
 
-    getMovies(page)
+    getMovies(page, { sortBy, genreId, ratingFilter })
       .then(data => ({
         movies: cleanPosterData(data),
         page: data.page,
@@ -46,12 +60,13 @@ class App extends Component {
           movies: isInitialLoad ? data.movies : [...prevState.movies, ...data.movies],
           page: data.page,
           totalPages: data.totalPages,
-          isLoadingMore: false
+          isLoadingMore: false,
+          isInitialLoading: false
         }));
       })
       .catch(error => {
         if (isInitialLoad) {
-          this.setState({ error: error.message, isLoadingMore: false });
+          this.setState({ error: error.message, isLoadingMore: false, isInitialLoading: false });
         } else {
           this.setState({ isLoadingMore: false });
         }
@@ -62,19 +77,72 @@ class App extends Component {
     this.loadMovies(this.state.page + 1);
   }
 
+  handleFilterChange = (updates) => {
+    this.setState({
+      ...updates,
+      movies: [],
+      page: 0,
+      totalPages: 1,
+      isLoadingMore: false,
+      error: ''
+    }, () => this.loadMovies(1));
+  }
+
+  handleSortChange = (sortBy) => {
+    this.handleFilterChange({ sortBy });
+  }
+
+  handleGenreChange = (genreId) => {
+    this.handleFilterChange({ genreId });
+  }
+
+  handleRatingChange = (ratingFilter) => {
+    this.handleFilterChange({ ratingFilter });
+  }
+
   conditionalPostersDisplay = () => {
-    const { movies, error, page, totalPages, isLoadingMore } = this.state;
+    const { movies, error, page, totalPages, isLoadingMore, isInitialLoading } = this.state;
 
-    return error ? <Error message={error} page='movies' /> 
-      : !movies.length ? <Loader item='movie posters are' />
-      : <Posters
-          posters={movies}
-          onLoadMore={this.loadNextPage}
-          isLoadingMore={isLoadingMore}
-          hasMore={page < totalPages}
+    if (error) {
+      return <Error message={error} page='movies' />;
+    }
+
+    if (isInitialLoading) {
+      return <Loader item='movie posters are' />;
+    }
+
+    if (!movies.length) {
+      return <p className='no-results'>No movies match those filters. Try loosening them up.</p>;
+    }
+
+    return (
+      <Posters
+        posters={movies}
+        onLoadMore={this.loadNextPage}
+        isLoadingMore={isLoadingMore}
+        hasMore={page < totalPages}
+      />
+    );
+  }
+
+  renderPostersPage = () => {
+    const { sortBy, genreId, ratingFilter, genres } = this.state;
+
+    return (
+      <>
+        <MovieControls
+          sortBy={sortBy}
+          genreId={genreId}
+          ratingFilter={ratingFilter}
+          genres={genres}
+          onSortChange={this.handleSortChange}
+          onGenreChange={this.handleGenreChange}
+          onRatingChange={this.handleRatingChange}
         />
-  } 
-
+        {this.conditionalPostersDisplay()}
+      </>
+    );
+  }
 
   parseID = (match) => {
     return parseInt(match.params.id);
@@ -98,7 +166,7 @@ class App extends Component {
         </header>
         
         <Route exact path='/' 
-          render={() => this.conditionalPostersDisplay()}
+          render={() => this.renderPostersPage()}
         />
 
         <Route 

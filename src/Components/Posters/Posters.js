@@ -3,6 +3,22 @@ import './Posters.css';
 import { Link } from 'react-router-dom';
 
 class Posters extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hiddenPosterIds: []
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    const listWasReset = this.props.posters.length < prevProps.posters.length
+      || (prevProps.posters.length > 0 && this.props.posters[0]?.id !== prevProps.posters[0]?.id);
+
+    if (listWasReset && this.state.hiddenPosterIds.length) {
+      this.setState({ hiddenPosterIds: [] });
+    }
+  }
+
   componentWillUnmount() {
     if (this.observer) {
       this.observer.disconnect();
@@ -33,10 +49,23 @@ class Posters extends Component {
     }
   }
 
+  handleImageError = (id) => {
+    this.setState(prevState => {
+      if (prevState.hiddenPosterIds.includes(id)) {
+        return null;
+      }
+
+      return { hiddenPosterIds: [...prevState.hiddenPosterIds, id] };
+    });
+  }
+
   render() {
     const { posters, hasMore, isLoadingMore } = this.props;
+    const { hiddenPosterIds } = this.state;
 
-    const moviePosters = posters.map(poster => {
+    const visiblePosters = posters.filter(poster => !hiddenPosterIds.includes(poster.id));
+
+    const moviePosters = visiblePosters.map(poster => {
       const { id, poster_path, title } = poster;
 
       return (
@@ -49,6 +78,7 @@ class Posters extends Component {
             className='poster-icon'
             alt={`${title} Movie Poster and Button`}
             id={id}
+            onError={() => this.handleImageError(id)}
           />
         </Link>
       )

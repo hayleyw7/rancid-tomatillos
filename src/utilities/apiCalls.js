@@ -49,8 +49,40 @@ const formatMovieSummary = (movie) => ({
   release_date: movie.release_date
 });
 
-export const getMovies = (page = 1) => {
-  return tmdbFetch('/movie/popular', { page })
+export const getGenres = () => {
+  return tmdbFetch('/genre/movie/list')
+    .then(data => data.genres.sort((a, b) => a.name.localeCompare(b.name)));
+}
+
+export const getMovies = (page = 1, { sortBy = 'popularity.desc', genreId = '', ratingFilter = 'all' } = {}) => {
+  const params = {
+    page,
+    sort_by: sortBy,
+    include_adult: false,
+    include_video: false
+  };
+
+  if (genreId) {
+    params.with_genres = genreId;
+  }
+
+  if (ratingFilter === 'fresh') {
+    params['vote_average.gte'] = 7;
+    params['vote_count.gte'] = 50;
+  } else if (ratingFilter === 'mixed') {
+    params['vote_average.gte'] = 5;
+    params['vote_average.lte'] = 6.9;
+    params['vote_count.gte'] = 50;
+  } else if (ratingFilter === 'rotten') {
+    params['vote_average.lte'] = 4.9;
+    params['vote_count.gte'] = 50;
+  }
+
+  if (sortBy === 'vote_average.desc' && !params['vote_count.gte']) {
+    params['vote_count.gte'] = 100;
+  }
+
+  return tmdbFetch('/discover/movie', params)
     .then(data => ({
       movies: data.results.map(formatMovieSummary),
       page: data.page,

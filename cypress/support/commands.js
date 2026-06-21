@@ -6,7 +6,7 @@ Cypress.Commands.add('interceptAPI', (urlEnding, statusCode, fixturePage) => {
   };
 
   if (urlEnding === '') {
-    cy.intercept('**/movie/popular*', interceptOptions);
+    cy.intercept('**/discover/movie*', interceptOptions);
   } else {
     const movieID = urlEnding.replace('/', '');
     cy.intercept(`**/movie/${movieID}*`, interceptOptions);

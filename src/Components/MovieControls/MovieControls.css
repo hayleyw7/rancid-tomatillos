@@ -1,0 +1,72 @@
+.movie-controls {
+  align-items: flex-end;
+  background-color: rgb(40, 44, 52);
+  border-bottom: 3px solid #880808;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+}
+
+.movie-controls__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.movie-controls__label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.movie-controls__select {
+  appearance: none;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23880808' d='M1.41.59 6 5.17 10.59.59 12 2 6 8 0 2z'/%3E%3C/svg%3E");
+  background-position: right 0.65rem center;
+  background-repeat: no-repeat;
+  background-size: 0.65rem;
+  border: 2px solid #880808;
+  border-radius: 0.5rem;
+  color: rgb(40, 44, 52);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  min-width: 10.5rem;
+  padding: 0.55rem 1.85rem 0.55rem 0.75rem;
+}
+
+.movie-controls__select:hover {
+  border-color: #a30a0a;
+}
+
+.movie-controls__select:focus {
+  outline: 2px solid #880808;
+  outline-offset: 2px;
+}
+
+.no-results {
+  color: rgb(40, 44, 52);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 3rem 1rem;
+}
+
+@media (max-width: 480px) {
+  .movie-controls {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 0.85rem 1rem;
+  }
+
+  .movie-controls__select {
+    min-width: 0;
+    width: 100%;
+  }
+}
