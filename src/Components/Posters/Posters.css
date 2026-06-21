@@ -1,13 +1,63 @@
 .posters-container {
-  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 80rem;
+  padding: 1.25rem 0.5rem 2rem;
+}
+
+.poster-item {
+  display: inline-block;
+  line-height: 0;
 }
 
 .poster-icon {
+  aspect-ratio: 2 / 3;
+  border-radius: .5rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.14);
+  display: block;
+  margin: .7rem;
+  object-fit: cover;
+  object-position: center;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  width: 15rem;
+}
+
+.poster-icon:hover {
+  box-shadow: 0 6px 18px rgba(136, 8, 8, 0.28);
+  transform: scale(1.04) perspective(1px);
+}
+
+.poster-skeleton {
+  aspect-ratio: 2 / 3;
+  background-color: rgba(40, 44, 52, 0.1);
   border-radius: .5rem;
   margin: .7rem;
   width: 15rem;
 }
 
-.poster-icon:hover {
-  transform: scale(1.07) perspective(1px);  
+.scroll-sentinel {
+  flex-basis: 100%;
+  height: 1px;
+}
+
+@media (max-width: 600px) {
+  .posters-container {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .poster-item,
+  .poster-skeleton {
+    width: 100%;
+  }
+
+  .poster-icon,
+  .poster-skeleton {
+    margin: 0;
+    width: 100%;
+  }
 }

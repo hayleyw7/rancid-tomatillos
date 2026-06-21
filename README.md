@@ -4,7 +4,7 @@
 
 This is an application to display movie posters and then access movie details through an API. The user can access a list of movie posters, select any one of them, & be provided information about that specific film, including its rating, description, release year, tagline, running time, and genre(s).
 
-The application is deployed and can be [accessed online here](https://rottentomatillos.surge.sh/).
+The application is deployed and can be [accessed online here](https://hayleyw7.github.io/rancid-tomatillos/).
 
 ## Motivation and rubric
 
@@ -46,7 +46,7 @@ Written in JavaScript, HTML, CSS, & JSX
 
 Utilizes NPM, Node, Cypress, Router, & React
 
-Deployed on Surge
+Deployed on GitHub Pages
 
 Built with Visual Studio Code
 
@@ -56,11 +56,41 @@ Built with Visual Studio Code
 
 ## Access and use website
 
-When the user visits the application [here](https://rottentomatillos.surge.sh/), they will be able to see a page tiled with movie posters. If they click a poster, they can see details for that movie. They can return to the original posters page by clicking "BACK" on the details page or the back button on their internet browser.
+When the user visits the application [here](https://hayleyw7.github.io/rancid-tomatillos/), they will be able to see a page tiled with movie posters. If they click a poster, they can see details for that movie. They can return to the original posters page by clicking "BACK" on the details page or the back button on their internet browser.
 
 After returning to the poster page, they can use the forward button on their browser to return to the previous movie information page, or they can click a new movie poster to see that movie information page instead.
 
 Each page has a unique URL that can be bookmarked and/or manually typed in the address bar.
+
+## TMDB API setup
+This app uses [The Movie Database (TMDB)](https://www.themoviedb.org/) for movie posters, ratings, and details. **TMDB API keys are free** — create an account and request a key at [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api). Personal projects stay within generous rate limits with no credit card required.
+
+No separate backend is needed. The app runs entirely as static files on GitHub Pages and calls TMDB directly from the browser.
+
+### Local development
+1. Copy `.env.example` to `.env`:
+   - `cp .env.example .env`
+2. Add your key to `.env`:
+   - `REACT_APP_TMDB_API_KEY=your_tmdb_api_key_here`
+3. Restart the dev server after creating or updating `.env`:
+   - `npm start`
+
+## Deploy to GitHub Pages
+The site is configured for [https://hayleyw7.github.io/rancid-tomatillos](https://hayleyw7.github.io/rancid-tomatillos).
+
+1. In your GitHub repo, go to **Settings → Secrets and variables → Actions** and add:
+   - Name: `REACT_APP_TMDB_API_KEY`
+   - Value: your TMDB API key
+2. In **Settings → Pages**, set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.
+3. Push to `main`. The workflow in `.github/workflows/deploy.yml` builds and publishes automatically.
+
+To deploy manually from your machine:
+```bash
+REACT_APP_TMDB_API_KEY=your_key npm run build
+npx gh-pages -d build
+```
+
+The API key is embedded in the built JavaScript (standard for client-side TMDB apps). Do not commit `.env`; use GitHub Secrets for CI deploys.
 
 ## Screenshots
 

@@ -1,9 +1,16 @@
 Cypress.Commands.add('interceptAPI', (urlEnding, statusCode, fixturePage) => {
-  cy.intercept(`https://rancid-tomatillos.herokuapp.com/api/v2/movies${urlEnding}`, {
+  const interceptOptions = {
     statusCode: statusCode,
     fixture: `${fixturePage}_test_data.json`,
     delay: 1000
-  })
+  };
+
+  if (urlEnding === '') {
+    cy.intercept('**/discover/movie*', interceptOptions);
+  } else {
+    const movieID = urlEnding.replace('/', '');
+    cy.intercept(`**/movie/${movieID}*`, interceptOptions);
+  }
 })
 
 Cypress.Commands.add('clickPoster', () => {
@@ -13,14 +20,14 @@ Cypress.Commands.add('clickPoster', () => {
 })
 
 Cypress.Commands.add('loadPostersPage', () => {
-  cy.interceptAPI('', 201, 'posters')
-    .interceptAPI('/337401', 201, 'movie')
+  cy.interceptAPI('', 200, 'posters')
+    .interceptAPI('/337401', 200, 'movie')
     .visit('http://localhost:3000')
 });
 
 Cypress.Commands.add('goToMoviePage', () => {
-  cy.interceptAPI('', 201, 'posters')
-    .interceptAPI('/337401', 201, 'movie')
+  cy.interceptAPI('', 200, 'posters')
+    .interceptAPI('/337401', 200, 'movie')
     .clickPoster()
 });
 
@@ -38,7 +45,7 @@ Cypress.Commands.add('goToMovie500Page', (error) => {
 });
 
 Cypress.Commands.add('goToMovieErrorPage', (error) => {
-  cy.interceptAPI('', 201,'posters')
+  cy.interceptAPI('', 200,'posters')
     .interceptAPI('/337401', error, 'movie')
     .clickPoster()
 });
