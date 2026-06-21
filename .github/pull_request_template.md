@@ -3,15 +3,6 @@
 ## What was implemented?
 -
 
-## Were there any issues that arose?
--
-
-## Is there anything that you need from your teammate?
--
-
-## Any other comments, questions, or concerns?
--
-
 ## Type of change
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
