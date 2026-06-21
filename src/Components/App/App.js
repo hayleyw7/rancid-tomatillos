@@ -6,7 +6,7 @@ import Posters from '../Posters/Posters';
 import Movie from '../Movie/Movie';
 import { getMovies } from '../../utilities/apiCalls';
 import { cleanPosterData } from '../../utilities/dataCleaning';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 class App extends Component {
   constructor() {
@@ -84,7 +84,21 @@ class App extends Component {
 
     return (
       <main className="App">
-        <h1 className="App-header">Rancid Tomatillos</h1>
+        <header className="App-header">
+          <Link to="/" className="App-brand">
+            <span className="App-logo" aria-hidden="true">
+              <span className="App-logo__fresh" />
+              <span className="App-logo__rotten" />
+            </span>
+            <div className="App-brand-text">
+              <h1 className="App-title">
+                <span className="App-title-rancid">Rancid</span>
+                <span className="App-title-tomatillos">Tomatillos</span>
+              </h1>
+              <p className="App-tagline">Fresh picks &amp; rotten flops</p>
+            </div>
+          </Link>
+        </header>
         
         <Route exact path='/' 
           render={() => this.conditionalPostersDisplay()}

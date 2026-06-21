@@ -1,20 +1,107 @@
 .App {
+  background-color: #141820;
+  min-height: 100vh;
   text-align: center;
 }
 
 .App-header {
   align-items: center;
-  background-color: #880808;
-  color: white;
+  background: linear-gradient(135deg, #0f1419 0%, #1a2332 45%, #162018 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
   display: flex;
-  flex-direction: column;
-  font-size: 4rem;
   justify-content: center;
+  padding: 1.25rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.App-brand {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  gap: 1rem;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.App-brand:hover {
+  opacity: 0.92;
+}
+
+.App-brand:focus-visible {
+  outline: 2px solid #7cb342;
+  outline-offset: 4px;
+  border-radius: 0.5rem;
+}
+
+.App-logo {
+  background: #1e2a1e;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: 1fr 1fr;
+  height: 3.25rem;
+  overflow: hidden;
+  width: 3.25rem;
+}
+
+.App-logo__fresh {
+  background: linear-gradient(160deg, #8bc34a 0%, #558b2f 100%);
+}
+
+.App-logo__rotten {
+  background: linear-gradient(160deg, #e53935 0%, #880808 100%);
+}
+
+.App-brand-text {
+  text-align: left;
+}
+
+.App-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin: 0;
-  min-height: 15vh;
-  padding: 0.5rem 0 0.5rem 0;
+}
+
+.App-title-rancid {
+  color: #ef5350;
+  margin-right: 0.35em;
+}
+
+.App-title-tomatillos {
+  color: #aed581;
+}
+
+.App-tagline {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin: 0.35rem 0 0;
+  text-transform: uppercase;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    padding: 1rem;
+  }
+
+  .App-logo {
+    height: 2.75rem;
+    width: 2.75rem;
+  }
+
+  .App-tagline {
+    font-size: 0.7rem;
+  }
 }
