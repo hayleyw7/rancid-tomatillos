@@ -12,7 +12,7 @@ describe('Single Movie Details Page', () => {
   it('Should be able to render movie details', () => {
     cy.get('section[class="movie-background"]')
       .should('have.attr', 'style')
-      .should('include', 'https://image.tmdb.org/t/p/original//zzWGRw277MNoCs3zhyG3YmYQsXv.jpg')
+      .should('include', 'https://image.tmdb.org/t/p/original/zzWGRw277MNoCs3zhyG3YmYQsXv.jpg')
     cy.get('h2[class="title"]')
       .contains('Donald Duck')
     cy.get('p[class="rating"]')

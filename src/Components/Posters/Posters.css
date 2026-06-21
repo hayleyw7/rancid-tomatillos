@@ -11,3 +11,14 @@
 .poster-icon:hover {
   transform: scale(1.07) perspective(1px);  
 }
+
+.scroll-sentinel {
+  height: 1px;
+  width: 100%;
+}
+
+.loading-more {
+  margin: 1.5rem auto 2rem;
+  text-align: center;
+  width: 100%;
+}

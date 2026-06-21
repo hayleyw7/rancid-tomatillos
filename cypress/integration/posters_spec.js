@@ -21,7 +21,7 @@ describe('Posters Page', () => {
   it('Should be able to render the correct posters', () => {
     cy.get('img[class="poster-icon"]')
       .should('have.attr', 'src')
-      .should('include', 'https://image.tmdb.org/t/p/original//6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg')
+      .should('include', 'https://image.tmdb.org/t/p/original/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg')
   });
 
   it('Should confirm that all posters display', () => {

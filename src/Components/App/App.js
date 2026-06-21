@@ -4,7 +4,7 @@ import Error from '../Error/Error';
 import Loader from '../Loader/Loader';
 import Posters from '../Posters/Posters';
 import Movie from '../Movie/Movie';
-import { getData } from '../../utilities/apiCalls';
+import { getMovies } from '../../utilities/apiCalls';
 import { cleanPosterData } from '../../utilities/dataCleaning';
 import { Route } from 'react-router-dom';
 
@@ -13,23 +13,66 @@ class App extends Component {
     super();
     this.state = {
       movies: [],
-      error: ''
+      error: '',
+      page: 0,
+      totalPages: 1,
+      isLoadingMore: false
     }
   }
   
   componentDidMount = () => {
-    getData('https://rancid-tomatillos.herokuapp.com/api/v2/movies')
-    .then(data => cleanPosterData(data))
-    .then(data => this.setState({movies: data}))
-    .catch(error => this.setState({error: error.message}))
+    this.loadMovies(1);
+  }
+
+  loadMovies = (page) => {
+    const isInitialLoad = page === 1;
+
+    if (!isInitialLoad) {
+      if (this.state.isLoadingMore || this.state.page >= this.state.totalPages) {
+        return;
+      }
+
+      this.setState({ isLoadingMore: true });
+    }
+
+    getMovies(page)
+      .then(data => ({
+        movies: cleanPosterData(data),
+        page: data.page,
+        totalPages: data.totalPages
+      }))
+      .then(data => {
+        this.setState(prevState => ({
+          movies: isInitialLoad ? data.movies : [...prevState.movies, ...data.movies],
+          page: data.page,
+          totalPages: data.totalPages,
+          isLoadingMore: false
+        }));
+      })
+      .catch(error => {
+        if (isInitialLoad) {
+          this.setState({ error: error.message, isLoadingMore: false });
+        } else {
+          this.setState({ isLoadingMore: false });
+        }
+      });
+  }
+
+  loadNextPage = () => {
+    this.loadMovies(this.state.page + 1);
   }
 
   conditionalPostersDisplay = () => {
-    const {movies, error} = this.state;
+    const { movies, error, page, totalPages, isLoadingMore } = this.state;
 
     return error ? <Error message={error} page='movies' /> 
       : !movies.length ? <Loader item='movie posters are' />
-      : <Posters posters={movies} />
+      : <Posters
+          posters={movies}
+          onLoadMore={this.loadNextPage}
+          isLoadingMore={isLoadingMore}
+          hasMore={page < totalPages}
+        />
   } 
 
 
