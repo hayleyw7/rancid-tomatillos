@@ -30,8 +30,8 @@ describe('Posters Page', () => {
       .should('eq', 4)
   });
 
-  it('Should be able to render the movie posters loading image', () => {
-    cy.get('img[class="loader-icon"]')
+  it('Should be able to render the movie posters loading spinner', () => {
+    cy.get('[class="loader-icon"]')
       .should('be.visible')
   });
 
