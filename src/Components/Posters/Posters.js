@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './Posters.css';
 import { Link } from 'react-router-dom';
+import { TMDB_PAGE_SIZE } from '../../utilities/apiCalls';
+
+const MOBILE_BREAKPOINT = 600;
+const MOBILE_POSTERS_PER_ROW = 2;
 
 class Posters extends Component {
   constructor(props) {
@@ -59,6 +63,26 @@ class Posters extends Component {
     });
   }
 
+  getSkeletonCount = () => {
+    const postersPerRow = window.innerWidth <= MOBILE_BREAKPOINT
+      ? MOBILE_POSTERS_PER_ROW
+      : Math.max(1, Math.floor(window.innerWidth / 264));
+
+    const skeletonRows = Math.ceil(TMDB_PAGE_SIZE / postersPerRow);
+
+    return skeletonRows * postersPerRow;
+  }
+
+  renderSkeletonRows = () => {
+    return Array.from({ length: this.getSkeletonCount() }, (_, index) => (
+      <div
+        key={`skeleton-${index}`}
+        className='poster-skeleton'
+        aria-hidden='true'
+      />
+    ));
+  }
+
   render() {
     const { posters, hasMore, isLoadingMore } = this.props;
     const { hiddenPosterIds } = this.state;
@@ -72,6 +96,7 @@ class Posters extends Component {
         <Link
           to={`/${id}`}
           key={id}
+          className='poster-item'
         >
           <img
             src={poster_path}
@@ -87,8 +112,8 @@ class Posters extends Component {
     return (
       <section className='posters-container'>
         {moviePosters}
+        {isLoadingMore && this.renderSkeletonRows()}
         {hasMore && <div ref={this.setSentinelRef} className='scroll-sentinel' aria-hidden='true' />}
-        {isLoadingMore && <p className='loading-more'>Loading more movies...</p>}
       </section>
     )
   }

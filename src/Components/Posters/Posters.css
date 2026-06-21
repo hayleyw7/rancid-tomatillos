@@ -5,7 +5,7 @@
   margin-top: 1rem;
 }
 
-.posters-container a {
+.poster-item {
   display: inline-block;
   line-height: 0;
 }
@@ -21,7 +21,15 @@
 }
 
 .poster-icon:hover {
-  transform: scale(1.07) perspective(1px);  
+  transform: scale(1.07) perspective(1px);
+}
+
+.poster-skeleton {
+  aspect-ratio: 2 / 3;
+  background-color: rgba(40, 44, 52, 0.12);
+  border-radius: .5rem;
+  margin: .7rem;
+  width: 15rem;
 }
 
 .scroll-sentinel {
@@ -29,8 +37,22 @@
   height: 1px;
 }
 
-.loading-more {
-  flex-basis: 100%;
-  margin: 1.5rem auto 2rem;
-  text-align: center;
+@media (max-width: 600px) {
+  .posters-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0 0.75rem;
+  }
+
+  .poster-item,
+  .poster-skeleton {
+    width: 100%;
+  }
+
+  .poster-icon,
+  .poster-skeleton {
+    margin: 0;
+    width: 100%;
+  }
 }

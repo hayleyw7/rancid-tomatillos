@@ -1,6 +1,7 @@
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+export const TMDB_PAGE_SIZE = 20;
 
 export const getData = (url) => {
   return fetch(url)
