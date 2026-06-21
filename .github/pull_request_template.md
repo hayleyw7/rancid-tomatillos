@@ -1,5 +1,3 @@
-# Thank you for pushing your code!
-
 ## What was implemented?
 -
 
