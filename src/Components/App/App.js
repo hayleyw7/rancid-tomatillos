@@ -34,15 +34,18 @@ class App extends Component {
   }
   
   componentDidMount = () => {
-    sessionStorage.removeItem(BROWSE_SESSION_KEY);
-    this.previousPathname = this.props.location.pathname;
+    const { pathname } = this.props.location;
+    this.previousPathname = pathname;
 
     getGenres()
       .then(genres => this.setState({ genres }))
       .catch(() => this.setState({ genres: [] }));
 
-    if (this.props.location.pathname === '/') {
+    if (pathname === '/') {
+      sessionStorage.removeItem(BROWSE_SESSION_KEY);
       this.loadMovies(1);
+    } else if (this.isMoviePath(pathname)) {
+      this.restoreMoviesFromSession();
     }
 
     this.unlisten = this.props.history.listen(this.handleNavigation);
